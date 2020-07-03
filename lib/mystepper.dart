@@ -1,7 +1,3 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -32,8 +28,8 @@ const double _kCustomStepSize = 24.0;
 const double _kTriangleHeight = _kCustomStepSize * 0.866025;
 
 @immutable
-class CustomStep {
-  const CustomStep({
+class MyStep {
+  const MyStep({
     @required this.title,
     this.subtitle,
     @required this.content,
@@ -69,7 +65,6 @@ class MyStepper extends StatefulWidget {
         super(key: key);
 
   final List<MyStep> steps;
-
   final ScrollPhysics physics;
   final MyStepperType type;
   final int currentCustomStep;
@@ -261,8 +256,6 @@ class _CustomStepperState extends State<MyStepper>
         break;
     }
 
-    assert(cancelColor != null);
-
     final ThemeData themeData = Theme.of(context);
     final MaterialLocalizations localizations =
         MaterialLocalizations.of(context);
@@ -441,25 +434,30 @@ class _CustomStepperState extends State<MyStepper>
     final List<Widget> children = <Widget>[];
 
     for (int i = 0; i < widget.steps.length; i += 1) {
-      children.add(Column(key: _keys[i], children: <Widget>[
-        InkWell(
-            onTap: widget.steps[i].state != MyStepState.disabled
-                ? () {
-                    // In the vertical case we need to scroll to the newly tapped
-                    // step.
-                    Scrollable.ensureVisible(
-                      _keys[i].currentContext,
-                      curve: Curves.fastOutSlowIn,
-                      duration: kThemeAnimationDuration,
-                    );
+      children.add(
+        Column(
+          key: _keys[i],
+          children: <Widget>[
+            InkWell(
+                onTap: widget.steps[i].state != MyStepState.disabled
+                    ? () {
+                        // In the vertical case we need to scroll to the newly tapped
+                        // step.
+                        Scrollable.ensureVisible(
+                          _keys[i].currentContext,
+                          curve: Curves.fastOutSlowIn,
+                          duration: kThemeAnimationDuration,
+                        );
 
-                    if (widget.onCustomStepTapped != null)
-                      widget.onCustomStepTapped(i);
-                  }
-                : null,
-            child: _buildVerticalHeader(i)),
-        _buildVerticalBody(i)
-      ]));
+                        if (widget.onCustomStepTapped != null)
+                          widget.onCustomStepTapped(i);
+                      }
+                    : null,
+                child: _buildVerticalHeader(i)),
+            _buildVerticalBody(i)
+          ],
+        ),
+      );
     }
 
     return ListView(

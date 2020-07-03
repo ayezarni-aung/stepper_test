@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mytest/stepper_test.dart';
+import 'package:mytest/hello_stepper.dart';
+import 'package:mytest/test_gridview.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,8 +11,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: StepperTest(),
+      home: TestGridView(),
     );
   }
 }
